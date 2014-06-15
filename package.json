@@ -1,15 +1,15 @@
 {
-  "name": "hosted-hubot",
-  "version": "2.7.1",
-  "private": true,
-  "author": "GitHub Inc.",
+  "name": "agile-bot",
+  "version": "1.0.0",
+  "private": false,
+  "author": "AgileVentures Ltd.",
   "keywords": [
-    "github",
+    "agileventures",
     "hubot",
-    "campfire",
+    "slack",
     "bot"
   ],
-  "description": "A simple helpful robot for your Company",
+  "description": "A simple helpful robot for your AgileVentures",
   "licenses": [
     {
       "type": "MIT",
@@ -18,13 +18,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/github/hubot.git"
+    "url": "https://github.com/sampritipanda/agile-bot.git"
   },
   "dependencies": {
-    "hubot": ">= 2.6.0 < 3.0.0",
-    "hubot-scripts": ">= 2.5.0 < 3.0.0",
-    "hubot-slack": "~2.1.0",
-    "redis": "0.8.4",
+    "hubot": "*",
+    "hubot-scripts": "*",
+    "hubot-slack": "*",
+    "redis": "*",
     "scraper": ">= 0.0.9",
     "cleverbot-node": ">= 0.1.1"
   },
