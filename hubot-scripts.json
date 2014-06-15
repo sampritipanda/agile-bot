@@ -1,1 +1,12 @@
-["redis-brain.coffee", "shipit.coffee"]
+[
+  "redis-brain.coffee",
+  "shipit.coffee",
+  "auth.coffee",
+  "cleverbot.coffee",
+  "eval.coffee",
+  "hello.coffee",
+  "howdoi.coffee",
+  "ruby.coffee",
+  "ruby_rules.coffee",
+  "xkcd.coffee"
+]
