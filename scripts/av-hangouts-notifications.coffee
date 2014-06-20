@@ -37,17 +37,21 @@ module.exports = (robot) ->
     return id for own trigger, id of CHANNELS when name.match(new RegExp(trigger))
 
   robot.router.post "/hubot/hangouts-notify", (req, res) ->
-    rooms = [CHANNELS.general]
-    rooms.push(CHANNELS.pairing_notifications, find_project_for_hangout(req.body.title.toLowerCase())) if req.body.type == "PairProgramming"
-    rooms.push(CHANNELS.scrum_notifications) if req.body.type == "Scrum"
-
     # Parameters from the post request are:
     # title=HangoutTitle
     # link=https://plus.google.com/hangouts/_/56465464567fdsg45654yg
     # type = "Scrum" / "PairProgramming"
 
-    (robot.messageRoom room, "#{req.body.title}: #{req.body.link}") for room in rooms
+    robot.messageRoom CHANNELS.general, "#{req.body.title}: #{req.body.link}"
 
+    if req.body.type == "Scrum"
+      robot.messageRoom CHANNELS.scrum_notifications, "@channel #{req.body.title}: #{req.body.link}"
+    else if req.body.type == "PairProgramming"
+      room = find_project_for_hangout(req.body.title.toLowerCase())
+      robot.messageRoom CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}"
+      robot.messageRoom room, "#{req.body.title}: #{req.body.link}"
+
+ 
     # Send back an empty response
     res.writeHead 204, { 'Content-Length': 0 }
     res.end()
