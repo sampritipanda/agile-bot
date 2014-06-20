@@ -1,5 +1,5 @@
 # Description:
-#   Posts Hangouts Notifications from AgileVentures to Slack.
+#   Posts Hangouts Notifications from AgileVentures to Slack General Room.
 # 
 # Dependencies:
 #   None
@@ -7,14 +7,15 @@
 # Configuration:
 #
 # Commands:
-#   post hangout title and link to /hubot/hangouts-notify/:room
+#   post hangout title and link to /hubot/hangouts-notify
 #
 # Author:
 #   sampritipanda
 
 module.exports = (robot) ->
-  robot.router.post "/hubot/hangouts-notify/:room", (req, res) ->
-    room = req.params.room
+  robot.router.post "/hubot/hangouts-notify", (req, res) ->
+    # Setting the channel to general temporarily
+    room = "C0285CSUF" #req.params.room
 
     # Parameters from the post are:
     # title=HangoutTitle
