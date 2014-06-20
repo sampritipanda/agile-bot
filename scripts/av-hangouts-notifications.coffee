@@ -38,7 +38,7 @@ module.exports = (robot) ->
 
   robot.router.post "/hubot/hangouts-notify", (req, res) ->
     rooms = [CHANNELS.general]
-    rooms.push(CHANNELS.pairing_notifications, find_project_for_hangout(req.body.title)) if req.body.type == "PairProgramming"
+    rooms.push(CHANNELS.pairing_notifications, find_project_for_hangout(req.body.title.toString())) if req.body.type == "PairProgramming"
     rooms.push(CHANNELS.scrum_notifications) if req.body.type == "Scrum"
 
     # Parameters from the post request are:
