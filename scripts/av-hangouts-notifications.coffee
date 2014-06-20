@@ -45,10 +45,10 @@ module.exports = (robot) ->
     robot.messageRoom CHANNELS.general, "#{req.body.title}: #{req.body.link}"
 
     if req.body.type == "Scrum"
-      robot.messageRoom CHANNELS.scrum_notifications, "@channel #{req.body.title}: #{req.body.link}"
+      robot.messageRoom CHANNELS.scrum_notifications, "<!channel> #{req.body.title}: #{req.body.link}"
     else if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
-      robot.messageRoom CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}"
+      robot.messageRoom CHANNELS.pairing_notifications, "<!channel> #{req.body.title}: #{req.body.link}"
       robot.messageRoom room, "#{req.body.title}: #{req.body.link}"
 
  
