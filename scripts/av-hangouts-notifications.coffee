@@ -7,7 +7,7 @@
 # Configuration:
 #
 # Commands:
-#   post hangout title and link to /hubot/hangouts-notify
+#   post hangout title, link and type to /hubot/hangouts-notify
 #
 # Author:
 #   sampritipanda
