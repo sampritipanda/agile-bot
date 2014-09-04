@@ -17,6 +17,9 @@ CHANNELS = {
   "betasaas"    : "C02AHEA5P"
   "codealia"    : "C0297TUQC"
   "codelia"     : "C0297TUQC"
+  "community portal": "C02HVF1TP"
+  "communityportal": "C02HVF1TP"
+  "comport"     : "C02HVF1TP"
   "educhat"     : "C02AD0LG0"
   "edu chat"    : "C02AD0LG0"
   "esaas"       : "C02A6835V"
@@ -51,7 +54,7 @@ module.exports = (robot) ->
       robot.messageRoom CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}"
       robot.messageRoom room, "#{req.body.title}: #{req.body.link}"
 
- 
+
     # Send back an empty response
     res.writeHead 204, { 'Content-Length': 0 }
     res.end()
