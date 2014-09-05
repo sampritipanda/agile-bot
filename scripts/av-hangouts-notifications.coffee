@@ -1,8 +1,8 @@
 # Description:
 #   Posts Hangouts Notifications from AgileVentures to Slack.
-# 
+#
 # Dependencies:
-#   None
+#   "requestify": "*"
 #
 # Configuration:
 #
@@ -34,25 +34,40 @@ CHANNELS = {
   "scrum_notifications" : "C02B4QH1C"
 }
 
+requestify = require('requestify')
+
 module.exports = (robot) ->
 
   find_project_for_hangout = (name) ->
     return id for own trigger, id of CHANNELS when name.match(new RegExp(trigger))
+
+  send_message = (channel, message, user) ->
+    requestify.post 'https://slack.com/api/chat.postMessage',
+      channel: channel
+      text: message
+      username: user.name
+      icon_url: user.avatar
+      parse: full
+      token: process.env.SLACK_API_TOKEN
+
 
   robot.router.post "/hubot/hangouts-notify", (req, res) ->
     # Parameters from the post request are:
     # title=HangoutTitle
     # link=https://plus.google.com/hangouts/_/56465464567fdsg45654yg
     # type = "Scrum" / "PairProgramming"
+    # host_name = Random Guy
+    # host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
 
-    robot.messageRoom CHANNELS.general, "#{req.body.title}: #{req.body.link}"
+    user = name: req.body.host_name, avatar: req.body.host_avatar
+    send_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
 
     if req.body.type == "Scrum"
-      robot.messageRoom CHANNELS.scrum_notifications, "@channel #{req.body.title}: #{req.body.link}"
+      send_message CHANNELS.scrum_notifications, "@channel #{req.body.title}: #{req.body.link}", user
     else if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
-      robot.messageRoom CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}"
-      robot.messageRoom room, "#{req.body.title}: #{req.body.link}"
+      send_message CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}", user
+      send_message room, "#{req.body.title}: #{req.body.link}", user
 
 
     # Send back an empty response
