@@ -47,7 +47,7 @@ module.exports = (robot) ->
       text: message
       username: user.name
       icon_url: user.avatar
-      parse: full
+      parse: 'full'
       token: process.env.SLACK_API_TOKEN
 
 
