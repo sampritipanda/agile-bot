@@ -34,7 +34,10 @@ CHANNELS = {
   "scrum_notifications" : "C02B4QH1C"
 }
 
-requestify = require('requestify')
+request = require('request')
+rollbar = require('rollbar')
+
+rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN)
 
 module.exports = (robot) ->
 
@@ -42,14 +45,16 @@ module.exports = (robot) ->
     return id for own trigger, id of CHANNELS when name.match(new RegExp(trigger))
 
   send_message = (channel, message, user) ->
-    requestify.post 'https://slack.com/api/chat.postMessage',
+    request.post 'https://slack.com/api/chat.postMessage', form: 
       channel: channel
       text: message
       username: user.name
       icon_url: user.avatar
       parse: 'full'
       token: process.env.SLACK_API_TOKEN
-
+    , (error, response, body) ->
+      payload = JSON.parse body
+      rollbar.reportMessage(payload['error']) unless payload['ok']
 
   robot.router.post "/hubot/hangouts-notify", (req, res) ->
     # Parameters from the post request are:

@@ -27,7 +27,8 @@
     "redis": "*",
     "scraper": ">= 0.0.9",
     "cleverbot-node": ">= 0.1.1",
-    "requestify": "*"
+    "request": "*",
+    "rollbar": "*"
   },
   "engines": {
     "node": ">= 0.8.x",
