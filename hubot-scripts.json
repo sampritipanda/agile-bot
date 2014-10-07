@@ -8,5 +8,6 @@
   "howdoi.coffee",
   "ruby.coffee",
   "ruby_rules.coffee",
-  "xkcd.coffee"
+  "xkcd.coffee",
+  "announce.coffee"
 ]
