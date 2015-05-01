@@ -25,7 +25,6 @@
     "hubot-scripts": "*",
     "hubot-slack": "*",
     "redis": "*",
-    "scraper": ">= 0.0.9",
     "cleverbot-node": ">= 0.1.1",
     "request": "*",
     "rollbar": "*"
