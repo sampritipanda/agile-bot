@@ -26,6 +26,7 @@ CHANNELS = {
   "edu chat"    : "C02AD0LG0"
   "esaas"       : "C02A6835V"
   "cs169"       : "C02A6835V"
+  "metplus"     : "C09LSBWER"
   "mooc"        : "C02A6835V"
   "localsupport": "C02A6UWBJ"
   "local support": "C02A6UWBJ"
