@@ -94,3 +94,22 @@ module.exports = (robot) ->
     # Send back an empty response
     res.writeHead 204, { 'Content-Length': 0 }
     res.end()
+
+  robot.router.post "/hubot/hangouts-video-notify", (req, res) ->
+    # Parameters from the post request are:
+    # title=HangoutTitle
+    # video=http://youtu.be/CLoDNn9FNlY
+    # type = "Scrum" / "PairProgramming"
+    # host_name = Random Guy
+    # host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
+
+    user = name: req.body.host_name, avatar: req.body.host_avatar
+    send_message CHANNELS.general, "Video for #{req.body.title}: #{req.body.video}", user
+
+    if req.body.type == "PairProgramming"
+      room = find_project_for_hangout(req.body.title.toLowerCase())
+      send_message room, "Video for #{req.body.title}: #{req.body.video}", user
+
+    # Send back an empty response
+    res.writeHead 204, { 'Content-Length': 0 }
+    res.end()
