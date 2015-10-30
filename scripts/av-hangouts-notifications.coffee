@@ -104,7 +104,7 @@ module.exports = (robot) ->
     # host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
 
     user = name: req.body.host_name, avatar: req.body.host_avatar
-    send_message CHANNELS.general, "Video for #{req.body.title}: #{req.body.video}", user
+    send_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
 
     if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
