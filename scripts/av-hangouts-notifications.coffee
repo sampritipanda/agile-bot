@@ -108,7 +108,7 @@ module.exports = (robot) ->
 
     if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
-      send_message room, "Video for #{req.body.title}: #{req.body.video}", user
+      send_message room, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
 
     # Send back an empty response
     res.writeHead 204, { 'Content-Length': 0 }
