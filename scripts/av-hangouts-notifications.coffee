@@ -28,14 +28,15 @@ CHANNELS = {
   "cs169"       : "C02A6835V"
   "metplus"     : "C09LSBWER"
   "mooc"        : "C02A6835V"
-  "localsupport": "C02A6UWBJ"
-  "local support": "C02A6UWBJ"
+  "localsupport": "C0KK907B5"
+  "local support": "C0KK907B5"
   "osra"        : "C02AAM8SY"
   "websiteone"  : "C029E8G80"
   "wso"         : "C029E8G80"
   "github_api"  : "C02QZ46S9"
   "github api"  : "C02QZ46S9"
   "oodls"       : "C03GBBASJ"
+  "refugee"     : "C0GUTH7RS"
   "ronin"       : "C02KSQPJP"
   "secondappinion": "C03D6RUR7"
   "snow angels" : "C03D6RUR7"
@@ -47,7 +48,7 @@ CHANNELS = {
   "team aidz"   : "C03DA8NH0"
   "general"     : "C0285CSUF"
   "pairing_notifications" : "C02BNVCM1"
-  "scrum_notifications" : "C02B4QH1C"
+  "standup_notifications" : "C02B4QH1C"
 }
 
 request = require('request')
@@ -84,7 +85,7 @@ module.exports = (robot) ->
     send_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
 
     if req.body.type == "Scrum"
-      send_message CHANNELS.scrum_notifications, "@channel #{req.body.title}: #{req.body.link}", user
+      send_message CHANNELS.standup_notifications, "@channel #{req.body.title}: #{req.body.link}", user
     else if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
       send_message CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}", user
