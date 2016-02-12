@@ -25,7 +25,7 @@ CHANNELS = {
   "comport"     : "C02HVF1TP"
   "educhat"     : "C02AD0LG0"
   "edu chat"    : "C02AD0LG0"
-  "saas"       : "C02A6835V"
+  "saas"        : "C02A6835V"
   "cs169"       : "C02A6835V"
   "metplus"     : "C09LSBWER"
   "mooc"        : "C02A6835V"
