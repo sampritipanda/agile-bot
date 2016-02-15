@@ -144,9 +144,7 @@ module.exports = (robot) ->
 
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
-    if room == CHANNELS.sass or room == CHANNELS.cs169 or room == CHANNELS.homework
-      send_gitter_message room, "Video/Livestream for #{req.body.title} with #{user.name}: #{req.body.video}"
-    else
+    unless room == CHANNELS.sass or room == CHANNELS.cs169 or room == CHANNELS.homework
       send_slack_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
       if req.body.type == "PairProgramming"
         room = find_project_for_hangout(req.body.title.toLowerCase())
