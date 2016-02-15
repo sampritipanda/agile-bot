@@ -25,6 +25,7 @@ CHANNELS = {
   "comport"     : "C02HVF1TP"
   "educhat"     : "C02AD0LG0"
   "edu chat"    : "C02AD0LG0"
+  "homework"    : "C02A6835V"
   "saas"        : "C02A6835V"
   "cs169"       : "C02A6835V"
   "metplus"     : "C09LSBWER"
@@ -120,7 +121,7 @@ module.exports = (robot) ->
     else if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
 
-      if room == CHANNELS.sass or room == CHANNELS.cs169
+      if room == CHANNELS.sass or room == CHANNELS.cs169 or room == CHANNELS.homework
         send_gitter_message room, "#{req.body.title} with #{user.name}: #{req.body.link}"
       else
         send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
@@ -143,7 +144,7 @@ module.exports = (robot) ->
 
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
-    if room == CHANNELS.sass or room == CHANNELS.cs169
+    if room == CHANNELS.sass or room == CHANNELS.cs169 or room == CHANNELS.homework
       send_gitter_message room, "Video/Livestream for #{req.body.title} with #{user.name}: #{req.body.video}"
     else
       send_slack_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
