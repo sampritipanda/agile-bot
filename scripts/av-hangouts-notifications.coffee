@@ -121,7 +121,7 @@ module.exports = (robot) ->
     else if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.title.toLowerCase())
 
-      if room == CHANNELS.sass or room == CHANNELS.cs169 or room == CHANNELS.homework
+      if room == CHANNELS.cs169
         send_gitter_message room, "#{req.body.title} with #{user.name}: #{req.body.link}"
       else
         send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
@@ -144,10 +144,12 @@ module.exports = (robot) ->
 
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
-    unless room == CHANNELS.sass or room == CHANNELS.cs169 or room == CHANNELS.homework
+    if req.body.type == "Scrum"
       send_slack_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
-      if req.body.type == "PairProgramming"
-        room = find_project_for_hangout(req.body.title.toLowerCase())
+    else if req.body.type == "PairProgramming"
+      room = find_project_for_hangout(req.body.title.toLowerCase())
+      unless room == CHANNELS.cs169
+        send_slack_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
         send_slack_message room, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
 
     # Send back an empty response
