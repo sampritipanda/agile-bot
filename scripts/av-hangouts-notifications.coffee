@@ -38,7 +38,7 @@ CHANNELS = {
   "github_api"  : "C02QZ46S9"
   "github api"  : "C02QZ46S9"
   "oodls"       : "C03GBBASJ"
-  "refugee"     : "C0GUTH7RS"
+  "project unify": "C0GUTH7RS"
   "ronin"       : "C02KSQPJP"
   "secondappinion": "C03D6RUR7"
   "snow angels" : "C03D6RUR7"
