@@ -70,7 +70,7 @@ module.exports = (robot) ->
     return id for own trigger, id of CHANNELS when name.match(new RegExp(trigger))
 
   send_gitter_message = (channel, message) ->
-    request.post "https://api.gitter.im/v1/rooms/#{GITTER_ROOMS['saasbook/MOOC']}/chatMessages",
+    request.post "https://api.gitter.im/v1/rooms/#{GITTER_ROOMS['AgileVentures/agile-bot']}/chatMessages",
       form:
         text: message
       auth:
@@ -119,7 +119,7 @@ module.exports = (robot) ->
       send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
       send_slack_message CHANNELS.standup_notifications, "@channel #{req.body.title}: #{req.body.link}", user
     else if req.body.type == "PairProgramming"
-      room = find_project_for_hangout(req.body.title.toLowerCase())
+      room = find_project_for_hangout(req.body.project)
 
       if room == CHANNELS.cs169
         send_gitter_message room, "#{req.body.title} with #{user.name}: #{req.body.link}"
