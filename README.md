@@ -8,7 +8,7 @@ This version is designed to be deployed on [Heroku][heroku]. This README was gen
 
 ### Testing Hubot Locally
 
-First ensure [Redis](redis.io) is installed and running, e.g. on OSX
+First ensure [Redis](http://redis.io) is installed and running, e.g. on OSX
 
     $ brew install redis
     
