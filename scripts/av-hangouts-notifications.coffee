@@ -48,7 +48,7 @@ CHANNELS = {
   "takemeaway"  : "C04B0TN0S"
   "teamaidz"    : "C03DA8NH0"
   "team aidz"   : "C03DA8NH0"
-  "general"     : "C0285CSUF"
+  "general"     : "C0TBCUZDG"
   "pairing_notifications" : "C02BNVCM1"
   "standup_notifications" : "C02B4QH1C"
 }
