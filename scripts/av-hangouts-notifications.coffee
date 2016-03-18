@@ -48,7 +48,7 @@ CHANNELS = {
   "takemeaway"  : "C04B0TN0S"
   "teamaidz"    : "C03DA8NH0"
   "team aidz"   : "C03DA8NH0"
-  "general"     : "C0TBCUZDG"
+  "general"     : "C0TLAE1MH"
   "pairing_notifications" : "C02BNVCM1"
   "standup_notifications" : "C02B4QH1C"
 }
@@ -147,7 +147,7 @@ module.exports = (robot) ->
     if req.body.type == "Scrum"
       send_slack_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
     else if req.body.type == "PairProgramming"
-      room = find_project_for_hangout(req.body.title.toLowerCase())
+      room = find_project_for_hangout(req.body.project)
       unless room == CHANNELS.cs169
         send_slack_message CHANNELS.general, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
         send_slack_message room, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
