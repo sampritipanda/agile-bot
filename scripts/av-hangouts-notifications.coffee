@@ -15,7 +15,6 @@
 
 CHANNELS = {
   "autograder"  : "C02AA47UK"
-  "autograder"    : "C02AHEA5P"
   "binghamton-university-bike-share": "C033Z02P9"
   "codealia"    : "C0297TUQC"
   "communityportal": "C02HVF1TP"
