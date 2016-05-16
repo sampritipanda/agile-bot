@@ -100,7 +100,7 @@ module.exports = (robot) ->
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
     if req.body.type == "Scrum"
-      send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
+      send_slack_message CHANNELS.general, "@here #{req.body.title}: #{req.body.link}", user
       send_slack_message CHANNELS.standup_notifications, "@channel #{req.body.title}: #{req.body.link}", user
     else if req.body.type == "PairProgramming"
       room = find_project_for_hangout(req.body.project)
@@ -108,7 +108,7 @@ module.exports = (robot) ->
       if room == CHANNELS.cs169
         send_gitter_message room, "#{req.body.title} with #{user.name}: #{req.body.link}"
       else
-        send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
+        send_slack_message CHANNELS.general, "@here #{req.body.title}: #{req.body.link}", user
 
         send_slack_message CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}", user
         send_slack_message room, "#{req.body.title}: #{req.body.link}", user
