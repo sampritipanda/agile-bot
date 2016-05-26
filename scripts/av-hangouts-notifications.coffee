@@ -108,7 +108,7 @@ module.exports = (robot) ->
       if room == CHANNELS.cs169
         send_gitter_message room, "#{req.body.title} with #{user.name}: #{req.body.link}"
       else
-        send_slack_message CHANNELS.general, "<#{req.body.link}|#{req.body.title}>", user
+        send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
 
         send_slack_message CHANNELS.pairing_notifications, "@channel #{req.body.title}: #{req.body.link}", user
         send_slack_message room, "@here #{req.body.title}: #{req.body.link}", user
