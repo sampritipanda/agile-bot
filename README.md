@@ -8,7 +8,11 @@ This version is designed to be deployed on [Heroku][heroku]. This README was gen
 
 ### Testing Hubot Locally
 
-You can test your hubot by running the following.
+First ensure [Redis](http://redis.io) is installed and running, e.g. on OSX
+
+    $ brew install redis
+    
+and follow the instructions to start the redis server.  Then you can test your hubot by running the following.
 
     % bin/hubot
 
