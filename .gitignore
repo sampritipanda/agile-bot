@@ -1,2 +1,6 @@
 node_modules
 .DS_Store*
+.hubot_history
+.idea/
+gitter.coffee
+hangouts-notifier-password.txt
