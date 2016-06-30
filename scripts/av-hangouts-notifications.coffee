@@ -46,7 +46,7 @@ GITTER_ROOMS = {
 request = require('request')
 rollbar = require('rollbar')
 
-rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN)
+rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN, {enabled: false})
 
 module.exports = (robot) ->
 
@@ -81,8 +81,6 @@ module.exports = (robot) ->
             body: body
 
   send_slack_message = (channel, message, user) ->
-    # console.log 'send_slack_message'
-    # console.log request
     request.post 'https://slack.com/api/chat.postMessage', form:
       channel: message
       text: message 

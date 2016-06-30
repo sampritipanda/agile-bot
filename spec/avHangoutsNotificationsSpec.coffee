@@ -15,24 +15,24 @@ describe 'AV Hangout Notifications', ->
     avHangoutsNotifications({router: { post: (s,f) -> routes_functions[s] = f } })
     @routes_functions = routes_functions
 
-  # it 'has appropriate routes', ->
-  #   expect(typeof @routes_functions['/hubot/hangouts-notify']).toBe("function")
-  #   expect(typeof @routes_functions['/hubot/hangouts-video-notify']).toBe("function")
+  it 'has appropriate routes', ->
+    expect(typeof @routes_functions['/hubot/hangouts-notify']).toBe("function")
+    expect(typeof @routes_functions['/hubot/hangouts-video-notify']).toBe("function")
 
-  describe 'hangouts-video-notify', ->
+  # describe 'hangouts-video-notify', ->
 
-    beforeEach (done)->
-      setTimeout((->
-        res = {}
-        res.writeHead = -> {}
-        res.end = -> {} 
-        req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: 'Scrum' } }
-        req.post = -> {}   
-        @routes_functions['/hubot/hangouts-video-notify'](req,res)
-        done()
-      ), 5000)
+  #   beforeEach (done)->
+  #     setTimeout((->
+  #       res = {}
+  #       res.writeHead = -> {}
+  #       res.end = -> {} 
+  #       req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: 'Scrum' } }
+  #       req.post = -> {}   
+  #       @routes_functions['/hubot/hangouts-video-notify'](req,res)
+  #       done()
+  #     ), 5000)
 
-    it 'directs scrum video notifications to slack general channel', (done)->
-      expect(slack.isDone()).toBe(true)
-      done()
+  #   it 'directs scrum video notifications to slack general channel', (done)->
+  #     expect(slack.isDone()).toBe(true)
+  #     done()
 
