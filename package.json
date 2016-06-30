@@ -39,6 +39,6 @@
     "sepia": "^2.0.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node --coffee spec"
+    "test": "./node_modules/.bin/jasmine-node spec"
   }
 }
