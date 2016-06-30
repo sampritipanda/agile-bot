@@ -116,7 +116,7 @@ module.exports = (robot) ->
       room = find_project_for_hangout(req.body.project)
 
       if room == CHANNELS.cs169
-        send_gitter_message_avoid_repeats room, "#{req.body.title} with #{user.name}: [Click to Join Hangout](#{req.body.link})"
+        send_gitter_message_avoid_repeats room, "[#{req.body.title} with #{user.name}](#{req.body.link}) is starting NOW!"
       else
         send_slack_message CHANNELS.general, "#{req.body.title}: #{req.body.link}", user
 
