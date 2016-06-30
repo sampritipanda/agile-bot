@@ -81,8 +81,10 @@ module.exports = (robot) ->
             body: body
 
   send_slack_message = (channel, message, user) ->
+    # console.log 'send_slack_message'
+    # console.log request
     request.post 'https://slack.com/api/chat.postMessage', form:
-      channel: channel
+      channel: message
       text: message 
       username: user.name
       icon_url: user.avatar
