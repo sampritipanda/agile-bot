@@ -39,6 +39,6 @@
     "sepia": "^2.0.1"
   },
   "scripts": {
-    "test": "ENABLE_ROLLBAR=false ./node_modules/.bin/jasmine-node --verbose --coffee spec"
+    "test": "ENABLE_ROLLBAR=false GITTER_API_TOKEN=101010 ./node_modules/.bin/jasmine-node --verbose --coffee spec"
   }
 }
