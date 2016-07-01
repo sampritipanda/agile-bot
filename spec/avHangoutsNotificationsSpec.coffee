@@ -1,6 +1,6 @@
 nock = require('nock');
 
-slack = nock('https://slack.com:444')
+slack = nock('https://slack.com')
                 .post('/api/chat.postMessage')
                 .reply(200, {
                   ok: false,
@@ -19,20 +19,18 @@ describe 'AV Hangout Notifications', ->
     expect(typeof @routes_functions['/hubot/hangouts-notify']).toBe("function")
     expect(typeof @routes_functions['/hubot/hangouts-video-notify']).toBe("function")
 
-  # describe 'hangouts-video-notify', ->
+  describe 'hangouts-video-notify', ->
+    beforeEach (done) ->
+      res = {}
+      res.writeHead = -> {}
+      res.end = -> {} 
+      req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: 'Scrum' } }
+      req.post = -> {} 
+      @routes_functions['/hubot/hangouts-video-notify'](req,res)
+      setTimeout (->
+        done()
+      ), 1
 
-  #   beforeEach (done)->
-  #     setTimeout((->
-  #       res = {}
-  #       res.writeHead = -> {}
-  #       res.end = -> {} 
-  #       req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: 'Scrum' } }
-  #       req.post = -> {}   
-  #       @routes_functions['/hubot/hangouts-video-notify'](req,res)
-  #       done()
-  #     ), 5000)
-
-  #   it 'directs scrum video notifications to slack general channel', (done)->
-  #     expect(slack.isDone()).toBe(true)
-  #     done()
-
+    it 'should support async execution of test preparation and expectations', (done) ->
+      expect(slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
+      done()

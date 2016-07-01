@@ -46,7 +46,7 @@ GITTER_ROOMS = {
 request = require('request')
 rollbar = require('rollbar')
 
-rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN, {enabled: false})
+rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN, {enabled: process.env.ENABLE_ROLLBAR != 'false'})
 
 module.exports = (robot) ->
 
