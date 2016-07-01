@@ -39,6 +39,6 @@
     "sepia": "^2.0.1"
   },
   "scripts": {
-    "test": "ENABLE_ROLLBAR=false ./node_modules/.bin/jasmine-node --coffee spec"
+    "test": "ENABLE_ROLLBAR=false ./node_modules/.bin/jasmine-node --verbose --coffee spec"
   }
 }
