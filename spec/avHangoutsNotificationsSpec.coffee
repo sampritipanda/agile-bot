@@ -3,8 +3,8 @@ nock = require('nock');
 avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
 
 # endpoint, channel, text, username, icon_url, parse, 
-mockHangoutVideoNotify = (routes_functions, channel, type, done) ->
-  slack = nock('https://slack.com', allowUnmocked: true)
+mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
+  slack = nock('https://slack.com', allowUnmocked: false)
     .post('/api/chat.postMessage', 
       channel: channel, 
       text: 'Video/Livestream for undefined: undefined', 
@@ -19,7 +19,7 @@ mockHangoutVideoNotify = (routes_functions, channel, type, done) ->
   res = {}
   res.writeHead = -> {}
   res.end = -> {} 
-  req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: 'localsupport'} }
+  req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project} }
   req.post = -> {} 
   routes_functions['/hubot/hangouts-video-notify'](req,res)
   setTimeout (->
@@ -39,7 +39,7 @@ describe 'AV Hangout Notifications', ->
 
   describe 'hangouts-video-notify for scrum', ->
     beforeEach (done) ->
-      @slack = mockHangoutVideoNotify(@routes_functions, 'C0TLAE1MH', 'Scrum', done)
+      @slack = mockHangoutVideoNotify(@routes_functions, 'C0TLAE1MH', 'Scrum', 'localsupport', done)
 
     it 'should post scrum hangout link to general channel', (done) ->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
@@ -47,9 +47,17 @@ describe 'AV Hangout Notifications', ->
 
   describe 'hangouts-video-notify for pairing', ->
     beforeEach (done) ->
-      @slack = mockHangoutVideoNotify(@routes_functions, 'C0TLAE1MH', 'PairProgramming', done)
+      @slack = mockHangoutVideoNotify(@routes_functions, 'C0TLAE1MH', 'PairProgramming', 'localsupport', done)
 
     it 'should post pair hangout link to general channel', (done) ->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
+      done()
+
+  describe 'hangouts-video-notify for pairing on cs169', ->
+    beforeEach (done) ->
+      @slack = mockHangoutVideoNotify(@routes_functions, 'C02A6835V', 'PairProgramming', 'cs169', done)
+
+    it 'should not post pair hangout link on slack', (done) ->
+      expect(@slack.isDone()).toBe(false, 'unexpected HTTP endpoint was hit')
       done()
 
