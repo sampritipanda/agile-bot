@@ -1,13 +1,25 @@
 nock = require('nock');
 
-slack = nock('https://slack.com')
-                .post('/api/chat.postMessage')
+avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
+
+mockHangoutVideoNotify = (endpoint, channel, text, username, icon_url, parse, done)->
+  slack = nock('https://slack.com', allowUnmocked: true)
+                .post('/api/chat.postMessage',channel: 'C0TLAE1MH',
+                  text: 'Video/Livestream for undefined: undefined', username: 'jon', icon_url:'jon.jpg', parse: 'full')
                 .reply(200, {
                   ok: false,
                   error: 'not_authed'
                  });
-
-avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
+  res = {}
+  res.writeHead = -> {}
+  res.end = -> {} 
+  req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: 'Scrum' } }
+  req.post = -> {} 
+  @routes_functions['/hubot/hangouts-video-notify'](req,res)
+  setTimeout (->
+    done()
+  ), 1
+  slack
 
 describe 'AV Hangout Notifications', ->
   beforeEach ->
@@ -21,6 +33,13 @@ describe 'AV Hangout Notifications', ->
 
   describe 'hangouts-video-notify', ->
     beforeEach (done) ->
+      @slack = nock('https://slack.com', allowUnmocked: true)
+                .post('/api/chat.postMessage',channel: 'C0TLAE1MH',
+                  text: 'Video/Livestream for undefined: undefined', username: 'jon', icon_url:'jon.jpg', parse: 'full')
+                .reply(200, {
+                  ok: false,
+                  error: 'not_authed'
+                 });
       res = {}
       res.writeHead = -> {}
       res.end = -> {} 
@@ -31,6 +50,7 @@ describe 'AV Hangout Notifications', ->
         done()
       ), 1
 
-    it 'should support async execution of test preparation and expectations', (done) ->
-      expect(slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
+    it 'should post scrum hangout link to general channel', (done) ->
+      mockHangoutVideoNotify()
+      expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
       done()

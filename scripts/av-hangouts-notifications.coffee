@@ -82,7 +82,7 @@ module.exports = (robot) ->
 
   send_slack_message = (channel, message, user) ->
     request.post 'https://slack.com/api/chat.postMessage', form:
-      channel: message
+      channel: channel
       text: message 
       username: user.name
       icon_url: user.avatar
@@ -135,7 +135,6 @@ module.exports = (robot) ->
     # type = "Scrum" / "PairProgramming"
     # host_name = Random Guy
     # host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
-
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
     if req.body.type == "Scrum"
