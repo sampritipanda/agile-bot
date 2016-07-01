@@ -89,7 +89,8 @@ module.exports = (robot) ->
       parse: 'full'
       token: process.env.SLACK_API_TOKEN
     , (error, response, body) ->
-      payload = JSON.parse body
+      try payload = JSON.parse body
+      catch e then payload = {}
       unless payload['ok']
         rollbar.reportMessageWithPayloadData payload['error'],
           origin: 'send_slack_message'
