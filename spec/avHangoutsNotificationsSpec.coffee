@@ -1,14 +1,16 @@
+#require('source-map-support').install()
+#
 nock = require('nock');
 avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
 
-# endpoint, channel, text, username, icon_url, parse, 
+# endpoint, channel, text, username, icon_url, parse,
 mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
   slack = nock('https://slack.com', allowUnmocked: false)
-    .post('/api/chat.postMessage', 
-      channel: channel, 
-      text: 'Video/Livestream for undefined: undefined', 
-      username: 'jon', 
-      icon_url:'jon.jpg', 
+    .post('/api/chat.postMessage',
+      channel: channel,
+      text: 'Video/Livestream for undefined: undefined',
+      username: 'jon',
+      icon_url: 'jon.jpg',
       parse: 'full'
     )
     .reply(200, {
@@ -17,40 +19,40 @@ mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
     });
   res = {}
   res.writeHead = -> {}
-  res.end = -> {} 
-  req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project} }
-  req.post = -> {} 
-  routes_functions['/hubot/hangouts-video-notify'](req,res)
+  res.end = -> {}
+  req = {body: {host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project}}
+  req.post = -> {}
+  routes_functions['/hubot/hangouts-video-notify'](req, res)
   setTimeout (->
     done()
   ), 1
   slack
 
-mockSlackHangoutNotify = (routes_functions, channel, type, project,done) ->
+mockSlackHangoutNotify = (routes_functions, channel, type, project, done) ->
   text = if type == "Scrum" || channel == 'C02A6835V' then '@here undefined: undefined' else 'undefined: undefined'
   nock('https://api.gitter.im')
     .get('/v1/rooms/55e42db80fc9f982beaf2725/chatMessages')
-    .reply(200,[])
+    .reply(200, [])
   nock("https://api.gitter.im")
     .post("/v1/rooms/56b8bdffe610378809c070cc/chatMessages")
-    .reply(200,{error: 'not_authed'})
+    .reply(200, {error: 'not_authed'})
   slack = nock('https://slack.com', allowUnmocked: true)
-    .post('/api/chat.postMessage', 
+    .post('/api/chat.postMessage',
       channel: channel,
       text: text,
       username: 'jon'
       icon_url: 'jon.jpg',
       parse: 'full')
-    .reply(200,{
+    .reply(200, {
       ok: false,
       error: 'not_authed'
-     })
+    })
   res = {}
   res.writeHead = -> {}
-  res.end = -> {} 
-  req = { body: { host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project} }
-  req.post = -> {} 
-  routes_functions['/hubot/hangouts-notify'](req,res)  
+  res.end = -> {}
+  req = {body: {host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project}}
+  req.post = -> {}
+  routes_functions['/hubot/hangouts-notify'](req, res)
   setTimeout (->
     done()
   ), 1
@@ -59,7 +61,7 @@ mockSlackHangoutNotify = (routes_functions, channel, type, project,done) ->
 describe 'AV Hangout Notifications', ->
   beforeEach ->
     routes_functions = {}
-    avHangoutsNotifications({router: { post: (s,f) -> routes_functions[s] = f } })
+    avHangoutsNotifications({router: {post: (s, f) -> routes_functions[s] = f}})
     @routes_functions = routes_functions
 
   it 'has appropriate routes', ->
@@ -72,7 +74,7 @@ describe 'AV Hangout Notifications', ->
 
     it 'should post scrum hangout link to general channel', (done) ->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
-      done()  
+      done()
 
   describe 'hangouts-video-notify for pairing', ->
     beforeEach (done) ->
@@ -104,7 +106,7 @@ describe 'AV Hangout Notifications', ->
 
     it 'should post hangout link to general channel', (done) ->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
-      done()    
+      done()
 
   describe 'hangouts-notify for pair programming on cs169', (done) ->
     beforeEach (done) ->
