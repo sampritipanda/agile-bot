@@ -112,7 +112,6 @@ describe 'AV Hangout Notifications', ->
   describe 'hangouts-notify for pair programming on cs169', ->
     beforeEach (done) ->
       @slack = mockSlackHangoutNotify(@routes_functions, 'C02A6835V', 'PairProgramming', 'cs169', done)
-      #changing this to 'blahblah' doesn't break tests. perhaps smoething is buggy with this one?
       makeRequest(@routes_functions, 'PairProgramming', 'cs169', done)
 
     it 'should not post hangout link to mooc channel on slack', (done) ->
