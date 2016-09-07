@@ -1,5 +1,3 @@
-#require('source-map-support').install()
-#
 nock = require('nock');
 avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
 
@@ -28,7 +26,18 @@ mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
   ), 1
   slack
 
-mockSlackHangoutNotify = (routes_functions, channel, type, project, done) ->
+makeRequest = (routes_functions, type, project, done) ->
+  res = {}
+  res.writeHead = -> {}
+  res.end = -> {}
+  req = {body: {host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project}}
+  req.post = -> {}
+  routes_functions['/hubot/hangouts-notify'](req, res)
+  setTimeout (->
+    done()
+  ), 1
+
+mockSlackHangoutNotify = (routes_functions, channel, type, project) ->
   text = if type == "Scrum" || channel == 'C02A6835V' then '@here undefined: undefined' else 'undefined: undefined'
   nock('https://api.gitter.im')
     .get('/v1/rooms/55e42db80fc9f982beaf2725/chatMessages')
@@ -36,7 +45,7 @@ mockSlackHangoutNotify = (routes_functions, channel, type, project, done) ->
   nock("https://api.gitter.im")
     .post("/v1/rooms/56b8bdffe610378809c070cc/chatMessages")
     .reply(200, {error: 'not_authed'})
-  slack = nock('https://slack.com', allowUnmocked: true)
+  nock('https://slack.com', allowUnmocked: true)
     .post('/api/chat.postMessage',
       channel: channel,
       text: text,
@@ -47,16 +56,6 @@ mockSlackHangoutNotify = (routes_functions, channel, type, project, done) ->
       ok: false,
       error: 'not_authed'
     })
-  res = {}
-  res.writeHead = -> {}
-  res.end = -> {}
-  req = {body: {host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project}}
-  req.post = -> {}
-  routes_functions['/hubot/hangouts-notify'](req, res)
-  setTimeout (->
-    done()
-  ), 1
-  slack
 
 describe 'AV Hangout Notifications', ->
   beforeEach ->
@@ -72,7 +71,7 @@ describe 'AV Hangout Notifications', ->
     beforeEach (done) ->
       @slack = mockHangoutVideoNotify(@routes_functions, 'C0TLAE1MH', 'Scrum', 'localsupport', done)
 
-    it 'should post scrum hangout link to general channel', (done) ->
+    it 'should post scrum video link to general channel', (done) ->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
       done()
 
@@ -94,7 +93,8 @@ describe 'AV Hangout Notifications', ->
 
   describe 'hangouts-notify for scrum', ->
     beforeEach (done) ->
-      @slack = mockSlackHangoutNotify(@routes_functions, 'C0TLAE1MH','Scrum', 'localsupport',done)
+      @slack = mockSlackHangoutNotify(@routes_functions, 'C0TLAE1MH','Scrum', 'localsupport')
+      makeRequest(@routes_functions, 'Scrum', 'localsupport', done)
 
     it 'should post hangout link to general channel', (done)->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
@@ -103,6 +103,7 @@ describe 'AV Hangout Notifications', ->
   describe 'hangouts-notify for pair programming', (done) ->
     beforeEach (done) ->
       @slack = mockSlackHangoutNotify(@routes_functions, 'C0TLAE1MH', 'PairProgramming', 'localsupport', done)
+      makeRequest(@routes_functions, 'PairProgramming', 'localsupport', done)
 
     it 'should post hangout link to general channel', (done) ->
       expect(@slack.isDone()).toBe(true, 'expected HTTP endpoint was not hit')
@@ -111,6 +112,7 @@ describe 'AV Hangout Notifications', ->
   describe 'hangouts-notify for pair programming on cs169', (done) ->
     beforeEach (done) ->
       @slack = mockSlackHangoutNotify(@routes_functions, 'C02A6835V', 'PairProgramming', 'cs169', done)
+      makeRequest(@routes_functions, 'PairProgramming', 'cs169', done)
 
     it 'should not post hangout link to mooc channel on slack', (done) ->
       expect(@slack.isDone()).toBe(false, 'unexpected HTTP endpoint was hit')

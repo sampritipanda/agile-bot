@@ -83,7 +83,7 @@ module.exports = (robot) ->
   send_slack_message = (channel, message, user) ->
     request.post 'https://slack.com/api/chat.postMessage', form:
       channel: channel
-      text: message 
+      text: message
       username: user.name
       icon_url: user.avatar
       parse: 'full'
