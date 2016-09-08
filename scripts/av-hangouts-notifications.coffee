@@ -13,35 +13,8 @@
 # Author:
 #   sampritipanda
 
-CHANNELS = {
-  "autograder"  : "C02AA47UK"
-  "binghamton-university-bike-share": "C033Z02P9"
-  "codealia"    : "C0297TUQC"
-  "communityportal": "C02HVF1TP"
-  "educhat"     : "C02AD0LG0"
-  "cs169"       : "C02A6835V"
-  "metplus"     : "C09LSBWER"
-  "esaas-mooc"  : "C02A6835V"
-  "localsupport": "C0KK907B5"
-  "osra-support-system": "C02AAM8SY"
-  "websiteone"  : "C029E8G80"
-  "github-api-gem": "C02QZ46S9"
-  "oodls"       : "C03GBBASJ"
-  "refugee_tech": "C0GUTH7RS"
-  "secondappinion": "C03D6RUR7"
-  "snow-angels" : "C03D6RUR7"
-  "takemeaway"  : "C04B0TN0S"
-  "teamaidz"    : "C03DA8NH0"
-  "general"     : "C0TLAE1MH"
-  "pairing_notifications" : "C02BNVCM1"
-  "standup_notifications" : "C02B4QH1C"
-}
 
-GITTER_ROOMS = {
-  "saasbook/MOOC"           : "544100afdb8155e6700cc5e4"
-  "saasbook/AV102"          : "55e42db80fc9f982beaf2725"
-  "AgileVentures/agile-bot" : "56b8bdffe610378809c070cc"
-}
+[CHANNELS, GITTER_ROOMS] = require('./../config/' + process.env.LIVE_ENV + '.coffee')
 
 request = require('request')
 rollbar = require('rollbar')
@@ -49,7 +22,6 @@ rollbar = require('rollbar')
 rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN, {enabled: process.env.ENABLE_ROLLBAR != 'false'})
 
 module.exports = (robot) ->
-
   find_project_for_hangout = (name) ->
     return id for own trigger, id of CHANNELS when name.match(new RegExp(trigger))
 
@@ -101,13 +73,12 @@ module.exports = (robot) ->
             body: body
 
   robot.router.post "/hubot/hangouts-notify", (req, res) ->
-    # Parameters from the post request are:
-    # title=HangoutTitle
-    # link=https://plus.google.com/hangouts/_/56465464567fdsg45654yg
-    # type = "Scrum" / "PairProgramming"
-    # host_name = Random Guy
-    # host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
-
+# Parameters from the post request are:
+# title=HangoutTitle
+# link=https://plus.google.com/hangouts/_/56465464567fdsg45654yg
+# type = "Scrum" / "PairProgramming"
+# host_name = Random Guy
+# host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
     if req.body.type == "Scrum"
@@ -126,16 +97,16 @@ module.exports = (robot) ->
 
 
     # Send back an empty response
-    res.writeHead 204, { 'Content-Length': 0 }
+    res.writeHead 204, {'Content-Length': 0}
     res.end()
 
   robot.router.post "/hubot/hangouts-video-notify", (req, res) ->
-    # Parameters from the post request are:
-    # title=HangoutTitle
-    # video=http://youtu.be/CLoDNn9FNlY
-    # type = "Scrum" / "PairProgramming"
-    # host_name = Random Guy
-    # host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
+# Parameters from the post request are:
+# title=HangoutTitle
+# video=http://youtu.be/CLoDNn9FNlY
+# type = "Scrum" / "PairProgramming"
+# host_name = Random Guy
+# host_avatar = https://www.gravatar.com/avatar/fsd87fgds87f4387
     user = name: req.body.host_name, avatar: req.body.host_avatar
 
     if req.body.type == "Scrum"
@@ -147,5 +118,5 @@ module.exports = (robot) ->
         send_slack_message room, "Video/Livestream for #{req.body.title}: #{req.body.video}", user
 
     # Send back an empty response
-    res.writeHead 204, { 'Content-Length': 0 }
+    res.writeHead 204, {'Content-Length': 0}
     res.end()

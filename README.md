@@ -1,3 +1,15 @@
+Agile-Bot
+=========
+
+Agile Bot takes requests to notify Slack and Gitter about pairing hangouts and youtube video streams.
+
+Note that it relies on having a LIVE_ENV variable set that will indicate which channels to hit - that LIVE_ENV var should be set to 'production' or 'staging'.
+
+
+
+Below is the original Hubot README
+----------------------------------
+
 # Hubot
 
 This is a version of GitHub's Campfire bot, hubot. He's pretty cool.
