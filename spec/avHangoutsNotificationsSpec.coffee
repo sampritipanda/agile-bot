@@ -10,7 +10,7 @@ makeRequest = (routes_functions, type, project, done) ->
   routes_functions['/hubot/hangouts-notify'](req, res)
   setTimeout (->
     done()
-  ), 1
+  ), 2
 
 mockSlackHangoutNotify = (routes_functions, channel, type, project) ->
   text = if type == "Scrum" || channel == 'C02A6835V' then '@here undefined: undefined' else 'undefined: undefined'
@@ -20,7 +20,7 @@ mockSlackHangoutNotify = (routes_functions, channel, type, project) ->
   nock("https://api.gitter.im")
     .post("/v1/rooms/56b8bdffe610378809c070cc/chatMessages")
     .reply(200, {error: 'not_authed'})
-  nock('https://slack.com', allowUnmocked: true)
+  nock('https://slack.com', allowUnmocked: false)
     .post('/api/chat.postMessage',
       channel: channel,
       text: text,

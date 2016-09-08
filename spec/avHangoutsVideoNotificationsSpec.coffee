@@ -10,7 +10,7 @@ makeRequest = (routes_functions, type, project, done) ->
   routes_functions['/hubot/hangouts-video-notify'](req, res)
   setTimeout (->
     done()
-  ), 1
+  ), 2
 
 # endpoint, channel, text, username, icon_url, parse,
 mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
