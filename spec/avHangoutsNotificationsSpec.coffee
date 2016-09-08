@@ -1,31 +1,6 @@
 nock = require('nock');
 avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
 
-#endpoint, channel, text, username, icon_url, parse,
-# mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
-#   slack = nock('https://slack.com', allowUnmocked: false)
-#     .post('/api/chat.postMessage',
-#       channel: channel,
-#       text: 'Video/Livestream for undefined: undefined',
-#       username: 'jon',
-#       icon_url: 'jon.jpg',
-#       parse: 'full'
-#     )
-#     .reply(200, {
-#       ok: false,
-#       error: 'not_authed'
-#     });
-#   res = {}
-#   res.writeHead = -> {}
-#   res.end = -> {}
-#   req = {body: {host_name: 'jon', host_avatar: 'jon.jpg', type: type, project: project}}
-#   req.post = -> {}
-#   #routes_functions['/hubot/hangouts-video-notify'](req, res)
-#   setTimeout (->
-#     done()
-#   ), 1
-#   slack
-
 makeRequest = (routes_functions, type, project, done) ->
   res = {}
   res.writeHead = -> {}
@@ -65,14 +40,6 @@ describe 'AV Hangout Notifications', ->
 
   it 'has appropriate routes', ->
     expect(typeof @routes_functions['/hubot/hangouts-notify']).toBe("function")
-
-  # describe 'hangouts-video-notify for pairing on cs169', ->
-  #   beforeEach (done) ->
-  #     @slack = mockHangoutVideoNotify(@routes_functions, 'C02A6835V', 'PairProgramming', 'cs169', done)
-
-  #   it 'should not post pair hangout link to mooc channel on slack', (done) ->
-  #     expect(@slack.isDone()).toBe(false, 'unexpected HTTP endpoint was hit')
-  #     done()
 
   describe 'hangouts-notify for scrum', ->
     beforeEach (done) ->
