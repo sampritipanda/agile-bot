@@ -1,5 +1,6 @@
 nock = require('nock');
 avHangoutsNotifications = require('../scripts/av-hangouts-notifications.coffee')
+debugger
 
 # endpoint, channel, text, username, icon_url, parse,
 mockHangoutVideoNotify = (routes_functions, channel, type, project, done) ->
